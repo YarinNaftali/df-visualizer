@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=/var/lib/sqlite3/database.db # Set the database URL, note the path match the database volume below
+    volumes:
+      - ./backend:/app
+  frontend:
+    build: ./frontend
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./frontend:/app
+  database:
+    image: sqlite:latest
+    volumes:
+      - ./database:/var/lib/sqlite3  # Mount the database folder for persistence
+
