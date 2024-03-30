@@ -1,33 +1,50 @@
 import streamlit as st
-import pandas as pd
-import plotly.express as px  # Use Plotly for more flexibility and interactivity
+
+from api import upload_dataframe, get_all_records
+from dataframe_handlers import get_dataframe_from_csv
+
 
 def upload_and_display_dataframe():
+    """
+    Uploads a CSV file and displays it as a DataFrame.
+
+    1. Upload a CSV file to the Backend.
+    2. (backend) Log the operation.
+    3. Fetch the DataFrame csv file from the Backend.
+    4. (backend) Log the operation.
+    5. Display the DataFrame.
+    """
+
     uploaded_file = st.file_uploader("Upload a CSV file", type=".csv")
     if uploaded_file is not None:
-        df = pd.read_csv(uploaded_file)
-        st.subheader("Uploaded DataFrame:")
-        st.dataframe(df)
-        return df
+        uploaded_df = get_dataframe_from_csv(uploaded_file)
+        if upload_dataframe(uploaded_df):
+            st.success("File uploaded successfully.")
+            st.subheader("Uploaded DataFrame:")
+            st.dataframe(uploaded_df)
+            return uploaded_df
+        else:
+            st.error("File upload failed.")
+            return None
     else:
         st.info("Please upload a CSV file to proceed.")
         return None
 
-def choose_and_plot_columns(df):
-    if df is not None:
-        col1, col2 = st.multiselect("Choose two or more columns to plot:", df.columns, min_selections=2)
-        if col1 and col2:
-            x, y = col1, col2
-            fig = px.scatter(df, x=x, y=y)  # Create interactive scatter plot
-            st.plotly_chart(fig, use_container_width=True)  # Include chart
-        else:
-            st.info("Please select at least two columns to plot.")
+
+def show_database_records():
+    records = get_all_records()
+    if records:
+        st.subheader("Database Records:")
+        st.table(records)
+    else:
+        st.info("No records found in the database.")
+
 
 def main():
     st.title("Full-Stack Data Exploration App")
-    df = upload_and_display_dataframe()
-    if df is not None:
-        choose_and_plot_columns(df)
+    upload_and_display_dataframe()
+    show_database_records()
+
 
 if __name__ == "__main__":
     main()
