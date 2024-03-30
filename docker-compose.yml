@@ -16,7 +16,7 @@ services:
     volumes:
       - ./frontend:/app
   database:
-    image: sqlite:latest
+    image: python:3.10-slim
     volumes:
       - ./database:/var/lib/sqlite3  # Mount the database folder for persistence
 
