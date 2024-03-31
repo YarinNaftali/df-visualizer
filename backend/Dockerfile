@@ -5,7 +5,8 @@ WORKDIR /fastapi-backend
 COPY requirements.txt .
 
 RUN pip install --upgrade pip \
-    pip install --no-cache-dir --upgrade -r requirements.txt
+    pip install --no-cache-dir --upgrade -r requirements.txt \
+    python -m pytest
 
 COPY ./src .
 
