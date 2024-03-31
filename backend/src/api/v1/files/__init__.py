@@ -1,5 +1,6 @@
 from fastapi import APIRouter, UploadFile, status
 from database import FilesLogDB, Operation
+import os
 
 from uuid import uuid4
 
@@ -8,7 +9,6 @@ router = APIRouter()
 
 @router.get("/all-files", status_code=status.HTTP_200_OK, response_model=list[str])
 async def get_all_files():
-    import os
     files = os.listdir("uploads")
     return files
 
