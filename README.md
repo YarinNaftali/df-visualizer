@@ -2,6 +2,10 @@
 
 Welcome to the Streamlit-FastAPI Full Stack Data Logging repository! 🚀
 
+# Demo
+
+[YouTube Demo](https://www.youtube.com/watch?v=fH6IAUSlDoc)
+
 # Overview
 
 This project provides a robust and flexible solution for creating a full stack application with streamlined data capabilities. Leveraging the power of Streamlit for the frontend, FastAPI for the backend, and Sqlite for logging operations, this project aims to simplify the process of uploading, visualizing, and logging data for users with diverse needs.
