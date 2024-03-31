@@ -6,7 +6,7 @@ COPY requirements.txt .
 
 RUN pip install --upgrade pip \
     pip install --no-cache-dir --upgrade -r requirements.txt \
-    python -m pytest
+    pytest
 
 COPY ./src .
 
