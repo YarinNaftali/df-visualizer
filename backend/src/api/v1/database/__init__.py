@@ -13,4 +13,4 @@ logger = logging.getLogger(__name__)
 async def get_all_records(table_name: str = "files"):
     records = FilesLogDB.get_all_records(table_name)
     logger.fatal(f"Records: {records}")
-    return {"records": records}
+    return records
