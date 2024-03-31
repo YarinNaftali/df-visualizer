@@ -1,7 +1,12 @@
 import httpx
 
 from pandas import DataFrame
-from constants import UPLOAD_CSV_ENDPOINT, GET_ALL_RECORDS_ENDPOINT
+
+from constants import (
+    UPLOAD_CSV_ENDPOINT,
+    GET_ALL_RECORDS_ENDPOINT,
+    GET_ALL_UPLOADED_FILES_ENDPOINT,
+)
 
 
 def upload_dataframe(df: DataFrame):
@@ -17,6 +22,15 @@ def get_all_records():
     url = GET_ALL_RECORDS_ENDPOINT
     response = httpx.get(url)
     if response.status_code == 200:
-        return response.json()["records"]
+        return response.json()
+    else:
+        return []
+
+
+def get_all_files():
+    url = GET_ALL_UPLOADED_FILES_ENDPOINT
+    response = httpx.get(url)
+    if response.status_code == 200:
+        return response.json()
     else:
         return []

@@ -73,6 +73,16 @@ class FilesLogDB(BaseModel):
         conn = cls.__get_files_db__()
         cursor = conn.cursor()
         cursor.execute(f"SELECT * FROM {table_name}")
-        records: list[FilesLogRow] = cursor.fetchall()
+        records = cursor.fetchall()
         conn.close()
-        return records
+
+        return [
+            FilesLogRow(
+                id=row[0],
+                timestamp=row[1],
+                operation=row[2],
+                status=row[3],
+                message=row[4],
+            )
+            for row in records
+        ]

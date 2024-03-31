@@ -1,6 +1,6 @@
 import streamlit as st
 
-from api import upload_dataframe, get_all_records
+from api import upload_dataframe, get_all_records, get_all_files
 from dataframe_handlers import get_dataframe_from_csv
 
 
@@ -37,13 +37,27 @@ def show_database_records():
         st.subheader("Database Records:")
         st.table(records)
     else:
-        st.info("No records found in the database.")
+        st.info(
+            "No records found in the database. Upload a file to view the operation logging."
+        )
+
+
+def show_all_files():
+    files = get_all_files()
+    if files:
+        st.subheader("Uploaded Files:")
+        st.table(files)
+    else:
+        st.info(
+            "No files found in the uploads directory. Upload a file to view it here."
+        )
 
 
 def main():
-    st.title("Full-Stack Data Exploration App")
+    st.title("File Upload and operations logging with FastAPI and Streamlit")
     upload_and_display_dataframe()
     show_database_records()
+    show_all_files()
 
 
 if __name__ == "__main__":
